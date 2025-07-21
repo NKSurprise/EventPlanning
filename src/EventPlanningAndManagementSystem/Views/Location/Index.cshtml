@@ -1,31 +1,4 @@
-﻿@* @model IEnumerable<EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models.Location>
-
-@{
-    ViewData["Title"] = "Locations";
-}
-
-<h2>@ViewData["Title"]</h2>
-<a asp-action="Create" class="btn btn-primary mb-3">Add Location</a>
-<a asp-controller="Events" asp-action="Index" class="btn btn-primary mb-3">Back</a>
-
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-            </tr>
-        }
-    </tbody>
-</table>
- *@
-@model IEnumerable<EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models.Location>
+﻿@model IEnumerable<EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models.Location>
 
 @{
     ViewData["Title"] = "Locations";

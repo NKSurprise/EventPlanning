@@ -20,7 +20,7 @@ public class EventsController : BaseController
     {
         _context = context;
         _userManager = userManager;
-        _eventService = eventService; // Assuming you have a service layer for events
+        _eventService = eventService; 
     }
 
 
@@ -30,25 +30,21 @@ public class EventsController : BaseController
         var userId = _userManager.GetUserId(User);
         var events = await _eventService.GetAllEventsAsync(userId);
 
-        // 🔍 Filter by search term
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
             searchTerm = searchTerm.ToLower();
             events = events.Where(e => e.Name.ToLower().Contains(searchTerm)).ToList();
         }
 
-        // 📁 Filter by category
         if (categoryId.HasValue && categoryId.Value > 0)
         {
             events = events.Where(e => e.CategoryId == categoryId.Value).ToList();
         }
 
-        // ✅ Set filter info for the view
         ViewData["CurrentFilter"] = searchTerm;
         ViewData["CurrentCategory"] = categoryId;
         ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name");
 
-        // 📄 PAGINATION
         int pageSize = 8;
         int pageNumber = page ?? 1;
 
@@ -91,7 +87,6 @@ public class EventsController : BaseController
     {
         if (!ModelState.IsValid)
         {
-            // Repopulate dropdowns on invalid post
             model.Locations = _context.Locations
                 .Select(l => new SelectListItem
                 {
@@ -182,7 +177,6 @@ public class EventsController : BaseController
         }
         catch (Exception ex)
         {
-            // Log or handle error
             ModelState.AddModelError("", "Error saving changes.");
             return View(model);
         }
@@ -191,7 +185,6 @@ public class EventsController : BaseController
     }
 
 
-    // GET: /Events/Delete/5
     //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -205,7 +198,6 @@ public class EventsController : BaseController
         return View(ev);
     }
 
-    // POST: /Events/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     //[Authorize(Roles = "Admin")]
@@ -221,57 +213,11 @@ public class EventsController : BaseController
 
         return RedirectToAction(nameof(Index));
     }
-    //public async Task<IActionResult> Details(int id)
-    //{
-    //    try
-    //    {
-    //        //var userId = _userManager.GetUserId(User);
-    //        EventDetailsViewModel? model = await _eventService.GetEventDetailsAsync(id);
-
-    //        if (model == null)
-    //        {
-    //            return RedirectToAction(nameof(Index));
-    //        }
-
-    //        return View(model);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine(ex.Message);
-    //        return RedirectToAction(nameof(Index), "Home");
-    //    }
-    //}
     [Authorize]
     public async Task<IActionResult> Details(int id)
     {
-        //var ev = await _context.Events
-        //    .Include(e => e.Category)
-        //    .Include(e => e.Location)
-        //    .Include(e => e.Publisher)
-        //    .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
-
-        //if (ev == null) return NotFound();
-
-        //var userId = _userManager.GetUserId(User);
-
-        // Check if the user is already registered
-        //var isRegistered = await _context.Registrations
-        //    .AnyAsync(r => r.EventId == id && r.UserId == userId);
         string userId = this.GetUserId();
         EventDetailsViewModel? model = await _eventService.GetEventDetailsAsync(id,userId);
-
-        //var model = new EventDetailsViewModel
-        //{
-        //    Id = ev.Id,
-        //    Name = ev.Name,
-        //    Description = ev.Description,
-        //    ImageUrl = ev.ImageUrl,
-        //    CategoryName = ev.Category.Name,
-        //    LocationName = ev.Location.Name,
-        //    PublisherName = ev.Publisher.UserName,
-        //    PublishedOn = ev.PublishedOn.ToString("dd-MM-yyyy"),
-        //    IsUserRegistered = isRegistered
-        //};
 
         return View(model);
     }

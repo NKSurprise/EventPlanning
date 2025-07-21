@@ -9,9 +9,9 @@ namespace EventPlanningAndManagementSystem.ViewModels.UserProfile
         public string? Address { get; set; }
         public string? Bio { get; set; }
 
-        public IFormFile? ProfilePicture { get; set; } // For uploading new image
+        public IFormFile? ProfilePicture { get; set; } 
 
-        public string? ExistingProfilePictureUrl { get; set; } // ← Add this line
+        public string? ExistingProfilePictureUrl { get; set; } 
     }
 
 

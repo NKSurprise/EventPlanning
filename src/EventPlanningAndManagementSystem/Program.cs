@@ -40,7 +40,7 @@ namespace EventPlanningAndManagementSystem
 
             builder.Services.AddScoped<IEventService, EventService>();
 
-           
+
 
             builder.Services.AddControllersWithViews();
 
@@ -51,15 +51,13 @@ namespace EventPlanningAndManagementSystem
 
             app.UseRouting();
 
-            //if (!app.Environment.IsDevelopment())
-            //{
-            //    app.UseExceptionHandler("/Home/Error500"); // Handles unhandled exceptions (500 errors)
-            //    app.UseStatusCodePagesWithReExecute("/Home/Error{0}"); // Handles 404, 403, etc.
-            //    app.UseHsts(); // Enforces HTTPS in production
-            //}
-            app.UseExceptionHandler("/Home/Error500"); // Handles unhandled exceptions (500 errors)
-            app.UseStatusCodePagesWithReExecute("/Home/Error{0}"); // Handles 404, 403, etc.
-            app.UseHsts(); 
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error500"); // Handles unhandled exceptions (500 errors)
+                app.UseStatusCodePagesWithReExecute("/Home/Error{0}"); // Handles 404, 403, etc.
+                app.UseHsts(); // Enforces HTTPS in production
+            }
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -67,8 +65,8 @@ namespace EventPlanningAndManagementSystem
             app.SeedAdmin();
 
             app.MapControllerRoute(
-   name: "areas",
-   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+               name: "areas",
+               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

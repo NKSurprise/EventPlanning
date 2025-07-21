@@ -6,7 +6,6 @@ namespace EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem
     {
         public int Id { get; set; }
 
-        // FK to Identity User
         public string UserId { get; set; } = null!;
         public IdentityUser User { get; set; } = null!;
 

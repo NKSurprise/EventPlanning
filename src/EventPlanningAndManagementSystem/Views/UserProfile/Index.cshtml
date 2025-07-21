@@ -1,40 +1,4 @@
-﻿@* @model EventPlanningAndManagementSystem.ViewModels.UserProfile.UserProfileViewModel
-
-@{
-    ViewData["Title"] = "My Profile";
-}
-
-<h2>@ViewData["Title"]</h2>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <dl class="row">
-            <dt class="col-sm-4">Full Name</dt>
-            <dd class="col-sm-8">@Model.FullName</dd>
-
-            <dt class="col-sm-4">Birth Date</dt>
-            <dd class="col-sm-8">@Model.BirthDate?.ToString("dd MMM yyyy") ?? "N/A"</dd>
-
-            <dt class="col-sm-4">Address</dt>
-            <dd class="col-sm-8">@Model.Address ?? "N/A"</dd>
-
-            <dt class="col-sm-4">Bio</dt>
-            <dd class="col-sm-8">@Model.Bio ?? "N/A"</dd>
-
-            <dt class="col-sm-4">Joined On</dt>
-            <dd class="col-sm-8">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
-        </dl>
-    </div>
-    @if (!string.IsNullOrEmpty(Model.ProfilePictureUrl))
-    {
-        <div class="col-md-6">
-            <img src="@Model.ProfilePictureUrl" class="img-thumbnail" alt="Profile Picture" />
-        </div>
-    }
-</div>
- *@
-@using EventPlanningAndManagementSystem.ViewModels.UserProfile
+﻿@using EventPlanningAndManagementSystem.ViewModels.UserProfile
 @model UserProfileViewModel
 @{
     ViewData["Title"] = "My Profile";
@@ -45,7 +9,7 @@
         <div class="card-body d-flex flex-column flex-md-row">
             <!-- Profile Picture -->
             <div class="text-center me-md-4 mb-3 mb-md-0">
-                <img src="@(!string.IsNullOrEmpty(Model.ProfilePictureUrl) ? Model.ProfilePictureUrl : "/images/default-profile.png")"
+                <img src="@(!string.IsNullOrEmpty(Model.ProfilePictureUrl) ? Model.ProfilePictureUrl : "/uploads/360_F_413174010_vwcb74ImpbZguCgGxBp0avUQDLGjXwpI.jpg")"
                      alt="Profile Picture"
                      class="rounded-circle img-thumbnail"
                      style="width: 150px; height: 150px; object-fit: cover;" />

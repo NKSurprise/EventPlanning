@@ -17,7 +17,6 @@ namespace EventPlanningAndManagementSystem.Controllers
             _context = context;
         }
 
-        // GET: /Categories
         //[AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -26,13 +25,11 @@ namespace EventPlanningAndManagementSystem.Controllers
             return View(categories);
         }
 
-        // GET: /Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: /Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddCategoryViewModel model)
@@ -42,7 +39,6 @@ namespace EventPlanningAndManagementSystem.Controllers
                 return View(model);
             }
 
-            // 🔍 Check for duplicate category name (case-insensitive)
             bool exists = await _context.Categories
                 .AnyAsync(c => c.Name.ToLower() == model.Name.ToLower());
 
@@ -63,7 +59,6 @@ namespace EventPlanningAndManagementSystem.Controllers
             return RedirectToAction("Index", "Events");
         }
 
-        // GET: /Categories/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -72,7 +67,6 @@ namespace EventPlanningAndManagementSystem.Controllers
             return View(category);
         }
 
-        // POST: /Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Category category)
@@ -86,7 +80,6 @@ namespace EventPlanningAndManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: /Categories/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

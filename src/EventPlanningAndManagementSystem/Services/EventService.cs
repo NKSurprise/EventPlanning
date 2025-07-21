@@ -31,27 +31,22 @@ namespace EventPlanningAndManagementSystem.Services
 
         #region Queries
 
-        /// <summary>
-        /// Returns a lightweight list of events suitable for the Index screen.
-        /// </summary>
         public async Task<IEnumerable<EventIndexViewModel>> GetAllEventsAsync(string? userId, string? search = null, int? categoryId = null)
         {
             var query = context.Events
                 .AsNoTracking()
                 .Include(e => e.Location)
                 .Include(e => e.Category)
-                .Where(e => !e.IsDeleted) // 👈 Exclude deleted items
+                .Where(e => !e.IsDeleted) 
                 .OrderByDescending(e => e.PublishedOn)
                 .AsQueryable();
 
 
-            // 🔍 Filter by search (event name)
             if (!string.IsNullOrWhiteSpace(search))
             {
                 query = query.Where(e => e.Name.Contains(search));
             }
 
-            // 📁 Filter by category ID
             if (categoryId.HasValue && categoryId.Value > 0)
             {
                 query = query.Where(e => e.CategoryId == categoryId.Value);
@@ -74,9 +69,6 @@ namespace EventPlanningAndManagementSystem.Services
         }
 
 
-        /// <summary>
-        /// Returns full details for a single event or<c>null</c> if the id is invalid.
-        /// </summary>
         public async Task<EventDetailsViewModel?> GetEventDetailsAsync(int? id, string userId)
         {
             if (id == null)
@@ -94,7 +86,6 @@ namespace EventPlanningAndManagementSystem.Services
 
             if (eventModel == null)
                 return null;
-            //var userId = _userManager.GetUserId(User);
             var isRegistered = await context.Registrations
             .AnyAsync(r => r.EventId == id && r.UserId == userId);
 
@@ -143,7 +134,7 @@ namespace EventPlanningAndManagementSystem.Services
 
             context.Events.Add(entity);
             var saved = await context.SaveChangesAsync();
-            inputModel.Id = entity.Id; // if needed later
+            inputModel.Id = entity.Id;
             return saved > 0;
         }
 

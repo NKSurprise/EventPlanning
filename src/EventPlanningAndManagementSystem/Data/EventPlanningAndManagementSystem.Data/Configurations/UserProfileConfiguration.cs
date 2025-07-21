@@ -9,10 +9,8 @@ namespace EventPlanningAndManagementSystem.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            // Primary key
             builder.HasKey(up => up.Id);
 
-            // Properties
             builder.Property(up => up.FullName)
                    .IsRequired()
                    .HasMaxLength(100);
@@ -29,7 +27,6 @@ namespace EventPlanningAndManagementSystem.Data.Configurations
             builder.Property(up => up.CreatedAt)
                    .HasDefaultValueSql("GETDATE()");
 
-            // One-to-one relationship with IdentityUser (no navigation on IdentityUser)
             builder.HasOne<IdentityUser>(up => up.User)
                    .WithOne()
                    .HasForeignKey<UserProfile>(up => up.UserId)
