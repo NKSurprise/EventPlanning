@@ -54,7 +54,7 @@ public class EventsController : BaseController
     }
 
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         var model = new AddEventInputModel
@@ -83,6 +83,7 @@ public class EventsController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(AddEventInputModel model)
     {
         if (!ModelState.IsValid)
@@ -122,7 +123,8 @@ public class EventsController : BaseController
 
         return RedirectToAction(nameof(Index));
     }
-
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int id)
     {
         var ev = await _context.Events.FindAsync(id);
@@ -185,7 +187,7 @@ public class EventsController : BaseController
     }
 
 
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         var ev = await _context.Events
@@ -198,21 +200,6 @@ public class EventsController : BaseController
         return View(ev);
     }
 
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    //[Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var ev = await _context.Events.FindAsync(id);
-        if (ev != null)
-        {
-            ev.IsDeleted = true;
-            _context.Update(ev);
-            await _context.SaveChangesAsync();
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
     [Authorize]
     public async Task<IActionResult> Details(int id)
     {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanningAndManagementSystem.Controllers
 {
-    //[Authorize(Roles = "Admin")] // Only admins can access this controller
+    [Authorize(Roles = "Admin")] // Only admins can access this controller
     public class CategoriesController : BaseController
     {
         private readonly ApplicationDbContext _context;
@@ -17,7 +17,7 @@ namespace EventPlanningAndManagementSystem.Controllers
             _context = context;
         }
 
-        //[AllowAnonymous]
+        
         [HttpGet]
         public async Task<IActionResult> Index()
         {

@@ -26,9 +26,12 @@
     @if (User?.Identity?.IsAuthenticated == true)
     {
         <div class="d-flex gap-2 flex-wrap">
-            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Add Event</a>
-            <a asp-controller="Location" asp-action="Index" class="btn btn-outline-primary">Locations</a>
-            <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary">Categories</a>
+            @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+            {
+                <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Add Event</a>
+                <a asp-controller="Location" asp-action="Index" class="btn btn-outline-primary">Locations</a>
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary">Categories</a>
+            }
             <a asp-controller="Registration" asp-action="Index" class="nav-link">My Events</a>
         </div>
     }

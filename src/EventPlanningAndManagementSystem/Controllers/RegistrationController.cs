@@ -32,12 +32,10 @@ namespace EventPlanningAndManagementSystem.Controllers
 
             if (registration != null)
             {
-                // Remove registration (un-favorite)
                 context.Registrations.Remove(registration);
             }
             else
             {
-                // Add registration (favorite)
                 context.Registrations.Add(new Registration
                 {
                     EventId = eventId,
@@ -73,7 +71,6 @@ namespace EventPlanningAndManagementSystem.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (not shown here for brevity)
                 ModelState.AddModelError("", "An error occurred while retrieving your registrations. Please try again later.");
                 return View(new List<RegistrationViewModel>());
             }

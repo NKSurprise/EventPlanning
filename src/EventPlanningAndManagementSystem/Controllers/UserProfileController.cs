@@ -1,45 +1,4 @@
-﻿//using EventPlanningAndManagementSystem.Data;
-//using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data;
-//using EventPlanningAndManagementSystem.ViewModels.UserProfile;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Mvc;
-
-//namespace EventPlanningAndManagementSystem.Controllers
-//{
-//    [Authorize]
-//    public class UserProfileController : Controller
-//    {
-//        private readonly ApplicationDbContext _context;
-//        private readonly UserManager<IdentityUser> _userManager;
-
-//        public UserProfileController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
-//        {
-//            _context = context;
-//            _userManager = userManager;
-//        }
-
-//        public async Task<IActionResult> Index()
-//        {
-//            var userId = _userManager.GetUserId(User);
-//            var profile = _context.UsersProfiles.FirstOrDefault(p => p.UserId == userId);
-
-//            if (profile == null) return NotFound("User profile not found.");
-
-//            var viewModel = new UserProfileViewModel
-//            {
-//                FullName = profile.FullName,
-//                BirthDate = profile.BirthDate,
-//                Address = profile.Address,
-//                ProfilePictureUrl = profile.ProfilePictureUrl,
-//                Bio = profile.Bio,
-//                CreatedAt = profile.CreatedAt
-//            };
-
-//            return View(viewModel);
-//        }
-//    }
-//}
+﻿
 using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data;
 using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models;
 using EventPlanningAndManagementSystem.ViewModels.UserProfile;

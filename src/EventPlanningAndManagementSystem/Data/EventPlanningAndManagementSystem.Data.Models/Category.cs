@@ -6,6 +6,5 @@
 
         public string Name { get; set; } = null!;
 
-        //public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
     }
 }

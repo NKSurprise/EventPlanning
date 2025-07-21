@@ -22,7 +22,6 @@ namespace EventPlanningAndManagementSystem.Extensions
                     IdentityRole role = new("Administrator");
                     await roleManager.CreateAsync(role);
                 }
-
                 IdentityUser admin = await userManager.FindByEmailAsync("adi@gmail.com");
                 await userManager.AddToRoleAsync(admin, "Administrator");
             })

@@ -6,7 +6,7 @@ using EventPlanningAndManagementSystem.ViewModels.Location;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+[Authorize(Roles = "Admin")]
 public class LocationController : BaseController
 {
     private readonly ApplicationDbContext _context;
@@ -39,7 +39,6 @@ public class LocationController : BaseController
             return View(model);
         }
 
-        // 🔍 Check for duplicates (case-insensitive)
         bool exists = await _context.Locations
             .AnyAsync(l => l.Name.ToLower() == model.Name.ToLower());
 
@@ -67,7 +66,6 @@ public class LocationController : BaseController
         return View(location);
     }
 
-    // POST: /Categories/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Location location)
