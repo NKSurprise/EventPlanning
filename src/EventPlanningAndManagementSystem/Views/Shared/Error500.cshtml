@@ -1,0 +1,20 @@
+﻿@model Exception
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+    ViewData["Title"] = "Server Error";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">500</h1>
+    <p class="lead">An unexpected error occurred. We're working on it!</p>
+    @* @* @if (isDevelopment && Model != null) 
+    {
+        <div class="alert alert-danger text-start mt-4 mx-auto" style="max-width: 800px;">
+            <h5>Error Details</h5>
+            <p><strong>Message:</strong> @Model.Message</p>
+            <p><strong>Stack Trace:</strong></p>
+            <pre>@Model.StackTrace</pre>
+        </div>
+    } *@
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+</div>

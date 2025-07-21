@@ -1,0 +1,88 @@
+﻿@* @model EventPlanningAndManagementSystem.ViewModels.UserProfile.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Full Name</dt>
+            <dd class="col-sm-8">@Model.FullName</dd>
+
+            <dt class="col-sm-4">Birth Date</dt>
+            <dd class="col-sm-8">@Model.BirthDate?.ToString("dd MMM yyyy") ?? "N/A"</dd>
+
+            <dt class="col-sm-4">Address</dt>
+            <dd class="col-sm-8">@Model.Address ?? "N/A"</dd>
+
+            <dt class="col-sm-4">Bio</dt>
+            <dd class="col-sm-8">@Model.Bio ?? "N/A"</dd>
+
+            <dt class="col-sm-4">Joined On</dt>
+            <dd class="col-sm-8">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
+        </dl>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ProfilePictureUrl))
+    {
+        <div class="col-md-6">
+            <img src="@Model.ProfilePictureUrl" class="img-thumbnail" alt="Profile Picture" />
+        </div>
+    }
+</div>
+ *@
+@using EventPlanningAndManagementSystem.ViewModels.UserProfile
+@model UserProfileViewModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body d-flex flex-column flex-md-row">
+            <!-- Profile Picture -->
+            <div class="text-center me-md-4 mb-3 mb-md-0">
+                <img src="@(!string.IsNullOrEmpty(Model.ProfilePictureUrl) ? Model.ProfilePictureUrl : "/images/default-profile.png")"
+                     alt="Profile Picture"
+                     class="rounded-circle img-thumbnail"
+                     style="width: 150px; height: 150px; object-fit: cover;" />
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex-fill">
+                <h3 class="card-title mb-4">My Profile</h3>
+
+                <dl class="row">
+                    <dt class="col-sm-4">Full Name</dt>
+                    <dd class="col-sm-8">@Model.FullName</dd>
+
+                    <dt class="col-sm-4">Birth Date</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.BirthDate.HasValue)
+                        {
+                            <span>@Model.BirthDate?.ToString("dd-MM-yyyy")</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">N/A</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Address</dt>
+                    <dd class="col-sm-8">@(!string.IsNullOrEmpty(Model.Address) ? Model.Address : "N/A")</dd>
+
+                    <dt class="col-sm-4">Bio</dt>
+                    <dd class="col-sm-8">@(!string.IsNullOrEmpty(Model.Bio) ? Model.Bio : "N/A")</dd>
+
+                    <dt class="col-sm-4">Joined On</dt>
+                    <dd class="col-sm-8">@Model.CreatedAt.ToString("dd-MM-yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+        <a asp-controller="UserProfile" asp-action="Edit" class="btn btn-primary">Edit Profile</a>
+    </div>
+</div>
+

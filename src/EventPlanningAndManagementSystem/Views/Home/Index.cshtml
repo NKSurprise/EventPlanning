@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Welcome to EventManager</h1>
+    <p class="lead">Plan, register, and manage events with ease.</p>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a class="btn btn-primary btn-lg" asp-controller="Events" asp-action="Index">Browse Events</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-secondary btn-lg ms-2" asp-controller="Events" asp-action="Create">Create Event</a>
+            <a class="btn btn-outline-dark btn-lg ms-2" asp-area="Admin" asp-controller="Admin" asp-action="Users">Admin Panel</a>
+        }
+    }
+    else
+    {
+        <a class="btn btn-outline-primary btn-lg" href="/Identity/Account/Login">Login</a>
+        <a class="btn btn-primary btn-lg ms-2" href="/Identity/Account/Register">Register</a>
+    }
+</div>

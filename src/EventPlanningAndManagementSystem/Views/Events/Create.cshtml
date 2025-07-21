@@ -1,0 +1,65 @@
+﻿@using EventPlanningAndManagementSystem.ViewModels.Event
+@model AddEventInputModel
+
+@{
+    ViewData["Title"] = "Create Event";
+    string today = DateTime.Now.ToString("dd-MM-yyyy");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Create" method="post">
+            <div class="row">
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="Name" class="form-label-add-edit">Event Name</label>
+                    <input asp-for="Name" class="form-control" aria-required="true" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="LocationId" class="form-label-add-edit">Select Location</label>
+                    <select asp-for="LocationId" class="form-control" asp-items="Model.Locations">
+                        <option value="">...</option>
+                    </select>
+                    <span asp-validation-for="LocationId" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="CategoryId" class="form-label-add-edit">Select Category</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="Model.Categories">
+                        <option value="">...</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Description" class="form-label-add-edit">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="ImageUrl" class="form-label-add-edit">Image URL</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL (optional)" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 mb-2">
+                <label asp-for="PublishedOn" class="form-label-add-edit">Published On</label>
+                <input asp-for="PublishedOn" class="form-control" type="text" value="@(string.IsNullOrEmpty(Model.PublishedOn) ? today : Model.PublishedOn)" />
+                <span asp-validation-for="PublishedOn" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2">
+                <button type="submit" class="btn btn-primary mb-3">Create</button>
+                <a asp-action="Index" class="btn btn-primary mb-3">Back</a>
+            </div>
+        </form>
+    </div>
+</div>

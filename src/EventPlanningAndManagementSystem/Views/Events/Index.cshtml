@@ -1,0 +1,108 @@
+﻿@model X.PagedList.IPagedList<EventPlanningAndManagementSystem.ViewModels.Event.EventIndexViewModel>
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "All Events";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-4 flex-wrap gap-2">
+    <h2>@ViewData["Title"]</h2>
+
+    <form method="get" asp-action="Index" class="d-flex flex-wrap gap-2">
+        <input type="text" name="searchTerm" placeholder="Search events..." class="form-control" value="@Context.Request.Query["searchTerm"]" />
+
+        <select name="categoryId" class="form-select">
+            <option value="">-- All Categories --</option>
+            @foreach (var category in (SelectList)ViewBag.Categories)
+            {
+                <option value="@category.Value" selected="@((Context.Request.Query["categoryId"] == category.Value) ? "selected" : null)">
+                    @category.Text
+                </option>
+            }
+        </select>
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+        <div class="d-flex gap-2 flex-wrap">
+            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Add Event</a>
+            <a asp-controller="Location" asp-action="Index" class="btn btn-outline-primary">Locations</a>
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary">Categories</a>
+            <a asp-controller="Registration" asp-action="Index" class="nav-link">My Events</a>
+        </div>
+    }
+</div>
+
+<hr />
+
+@if (Model != null && Model.Any())
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var ev in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="@(!string.IsNullOrEmpty(ev.ImageUrl) ? ev.ImageUrl : Url.Content("~/images/default-image.jpg"))"
+                         class="card-img-top"
+                         alt="@ev.Name"
+                         style="height: 180px; object-fit: cover;"
+                         onerror="this.onerror=null;this.src='/images/default-image.jpg';" />
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@ev.Name</h5>
+
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">@ev.CategoryName</span>
+                            <span class="badge bg-light text-dark">@ev.PublishedOn.ToShortDateString()</span>
+                        </div>
+
+                        <a asp-action="Details" asp-route-id="@ev.Id" class="btn btn-info w-100 mt-auto">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        {
+                            <div class="d-flex justify-content-between mt-2">
+                                <a asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-warning btn-sm w-50 me-1">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@ev.Id" class="btn btn-danger btn-sm w-50 ms-1">Delete</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action("Index", new {
+                page,
+                searchTerm = Context.Request.Query["searchTerm"],
+                categoryId = Context.Request.Query["categoryId"]
+            }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5,
+                UlElementClasses = new[] { "pagination" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center">
+        <h5>No events found.</h5>
+        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <p><a asp-action="Create">Add one now</a></p>
+        }
+    </div>
+}

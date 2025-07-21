@@ -1,0 +1,121 @@
+﻿@* @using EventPlanningAndManagementSystem.ViewModels.Event
+@model EventDetailsViewModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row justify-content-center" style="margin: 0 auto; max-width: 800px;">
+    <div class="col-md-4 text-center">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name" />
+        }
+        else
+        {
+            <img src="~/images/default-image.jpg" class="img-fluid" alt="No Image Available" />
+        }
+    </div>
+
+    <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <hr />
+            <p class="card-text">@Model.Description</p>
+            <p class="card-text"><strong>Location:</strong> @Model.LocationName</p>
+            <p class="card-text"><strong>Category:</strong> @Model.CategoryName</p>
+            <p class="card-text">
+                <strong>Published On:</strong> @Model.PublishedOn
+            </p>
+            <p class="card-text"><strong>Publisher:</strong> @Model.PublisherName</p>
+        </div>
+
+        <div class="card-footer text-center mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-controller="Events" asp-action="Index" class="btn btn-warning w-100 mx-1">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+
+                @* Optional: Add favorites or admin controls if needed 
+                @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary w-100 mx-1">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a asp-controller="Events" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger w-100 mx-1">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ *@
+@using EventPlanningAndManagementSystem.ViewModels.Event
+@model EventDetailsViewModel
+@{
+    ViewData["Title"] = "Destination Details";
+}
+
+<h2 class="mb-4">Destination Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4 text-center">
+        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid mb-3" style="max-height: 300px;" />
+        }
+        else
+        {
+            <p><em>No image available</em></p>
+        }
+    </div>
+
+    <div class="col-md-8">
+        <h3 class="fw-bold">@Model.Name</h3>
+        <hr />
+        <p>@Model.Description</p>
+        <hr />
+
+        <p>
+            <strong>Category:</strong> @Model.CategoryName
+        </p>
+        <p>
+            <strong>Location:</strong> @Model.LocationName
+        </p>
+        <p>
+            <strong>Published On:</strong> @Model.PublishedOn
+        </p>
+        <p>
+			<strong>Publisher:</strong> @Model.PublisherName
+        </p>
+    </div>
+</div>
+
+<hr />
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-warning">Back</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <form asp-controller="Registration" asp-action="ToggleRegister" method="post" class="d-inline">
+        <input type="hidden" name="eventId" value="@Model.Id" />
+        <button type="submit" class="btn btn-outline-primary">
+            <i class="fas fa-star"></i> @(Model.IsUserRegistered ? "Unregister" : "Register")
+        </button>
+    </form>
+
+
+
+</div>
