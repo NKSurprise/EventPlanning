@@ -2,23 +2,41 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Welcome to EventManager</h1>
-    <p class="lead">Plan, register, and manage events with ease.</p>
-
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <a class="btn btn-primary btn-lg" asp-controller="Events" asp-action="Index">Browse Events</a>
-
-        @if (User.IsInRole("Administrator"))
-        {
-            <a class="btn btn-outline-secondary btn-lg ms-2" asp-controller="Events" asp-action="Create">Create Event</a>
-            <a class="btn btn-outline-dark btn-lg ms-2" asp-area="Admin" asp-controller="Admin" asp-action="Users">Admin Panel</a>
-        }
-    }
-    else
-    {
-        <a class="btn btn-outline-primary btn-lg" href="/Identity/Account/Login">Login</a>
-        <a class="btn btn-primary btn-lg ms-2" href="/Identity/Account/Register">Register</a>
-    }
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card shadow-sm border-0 p-4 text-center bg-white">
+                <h1 class="display-4 mb-3 fw-bold">Welcome to EventManager</h1>
+                <p class="lead mb-4">Plan, register, and manage events with ease.</p>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mb-2">
+                        <a class="btn btn-primary btn-lg transition-btn" asp-controller="Events" asp-action="Index">Browse Events</a>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a class="btn btn-outline-secondary btn-lg transition-btn" asp-controller="Events" asp-action="Create">Create Event</a>
+                            <a class="btn btn-outline-dark btn-lg transition-btn" asp-area="Admin" asp-controller="Admin" asp-action="Users">Admin Panel</a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                        <a class="btn btn-outline-primary btn-lg transition-btn" href="/Identity/Account/Login">Login</a>
+                        <a class="btn btn-primary btn-lg transition-btn" href="/Identity/Account/Register">Register</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .transition-btn {
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .transition-btn:hover, .transition-btn:focus {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        filter: brightness(0.97);
+    }
+</style>
