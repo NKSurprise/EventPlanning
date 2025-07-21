@@ -31,7 +31,6 @@ namespace EventPlanningAndManagementSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddCategoryViewModel model)
         {
             if (!ModelState.IsValid)
@@ -59,6 +58,7 @@ namespace EventPlanningAndManagementSystem.Controllers
             return RedirectToAction("Index", "Events");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -68,7 +68,6 @@ namespace EventPlanningAndManagementSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Category category)
         {
             if (id != category.Id) return BadRequest();
@@ -81,7 +80,6 @@ namespace EventPlanningAndManagementSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             Category? category = await _context.Categories.FindAsync(id);

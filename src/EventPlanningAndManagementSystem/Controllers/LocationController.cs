@@ -30,7 +30,6 @@ public class LocationController : BaseController
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(AddLocationViewModel model)
     {
         if (!ModelState.IsValid)
@@ -66,7 +65,6 @@ public class LocationController : BaseController
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Location location)
     {
         if (id != location.Id) return BadRequest();
@@ -78,7 +76,6 @@ public class LocationController : BaseController
         return RedirectToAction(nameof(Index));
     }
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
         Location? location = await _context.Locations.FindAsync(id);

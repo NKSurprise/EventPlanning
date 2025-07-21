@@ -64,7 +64,6 @@ namespace EventPlanningAndManagementSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditUserProfileViewModel model)
         {
             if (!ModelState.IsValid)

@@ -22,7 +22,6 @@ namespace EventPlanningAndManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ToggleRegister(int eventId)
         {
             var userId = userManager.GetUserId(User);
