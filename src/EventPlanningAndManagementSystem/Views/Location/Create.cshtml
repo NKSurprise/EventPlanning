@@ -10,6 +10,7 @@
 <hr />
 
 <form asp-action="Create" method="post">
+	@Html.AntiForgeryToken()
     <div class="form-group mb-2">
         <label asp-for="Name" class="form-label">Name</label>
         <input asp-for="Name" class="form-control" />

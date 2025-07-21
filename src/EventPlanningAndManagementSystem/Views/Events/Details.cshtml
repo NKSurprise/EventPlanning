@@ -44,7 +44,7 @@
 
 <div class="mt-4">
     <a asp-action="Index" class="btn btn-warning">Back</a>
-    @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+    @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
     {
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
         <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">

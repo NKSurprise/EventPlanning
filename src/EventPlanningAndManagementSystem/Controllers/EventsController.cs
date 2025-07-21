@@ -20,7 +20,7 @@ public class EventsController : BaseController
     {
         _context = context;
         _userManager = userManager;
-        _eventService = eventService; 
+        _eventService = eventService;
     }
 
 
@@ -82,7 +82,6 @@ public class EventsController : BaseController
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Create(AddEventInputModel model)
     {
@@ -149,7 +148,6 @@ public class EventsController : BaseController
 
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(int id, EditEventViewModel model)
     {
@@ -189,6 +187,7 @@ public class EventsController : BaseController
 
 
     [Authorize(Roles = "Administrator")]
+    [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
         var ev = await _context.Events

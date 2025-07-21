@@ -65,7 +65,7 @@
                             <i class="fas fa-info-circle"></i> Details
                         </a>
 
-                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
                         {
                             <div class="d-flex justify-content-between mt-2">
                                 <a asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-warning btn-sm w-50 me-1">Edit</a>
@@ -104,7 +104,7 @@ else
 {
     <div class="alert alert-info text-center">
         <h5>No events found.</h5>
-        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
         {
             <p><a asp-action="Create">Add one now</a></p>
         }

@@ -3,6 +3,7 @@ using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Dat
 using EventPlanningAndManagementSystem.Extensions;
 using EventPlanningAndManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanningAndManagementSystem
@@ -42,7 +43,12 @@ namespace EventPlanningAndManagementSystem
 
 
 
-            builder.Services.AddControllersWithViews();
+            //builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
 
             var app = builder.Build();
 

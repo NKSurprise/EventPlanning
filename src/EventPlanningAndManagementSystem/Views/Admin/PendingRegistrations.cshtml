@@ -20,14 +20,11 @@
 				<td>@reg.RegisteredOn.ToString("dd-MM-yyyy")</td>
 				<td>
 					<form asp-action="ConfirmRegistration" asp-controller="Admin" method="post" class="d-inline">
+						@Html.AntiForgeryToken()
 						<input type="hidden" name="id" value="@reg.RegistrationId" />
 						<button class="btn btn-success btn-sm">Confirm</button>
 					</form>
 
-					@*  <form asp-action="DenyRegistration" asp-controller="Admin" method="post" class="d-inline ms-2">
-                        <input type="hidden" name="id" value="@reg.RegistrationId" />
-                        <button class="btn btn-danger btn-sm">Deny</button>
-                    </form> *@
 					<form asp-action="DenyRegistration" method="post">
 						@Html.AntiForgeryToken()
 						<input type="hidden" name="id" value="@reg.RegistrationId" />
