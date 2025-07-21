@@ -63,6 +63,7 @@ namespace EventPlanningAndManagementSystem.Controllers
                         EventName = r.Event.Name,
                         RegisteredOn = r.RegisteredOn,
                         IsConfirmed = r.IsConfirmed,
+                        IsDenied = r.IsDenied,
                         UserId = r.UserId,
                     })
                     .ToListAsync();

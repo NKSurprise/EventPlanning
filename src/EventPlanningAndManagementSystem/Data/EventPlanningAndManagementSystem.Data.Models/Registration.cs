@@ -14,7 +14,8 @@ namespace EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem
 
         public DateTime RegisteredOn { get; set; } = DateTime.Now;
         public bool IsConfirmed { get; set; } = false;
-        public string? Notes { get; set; } 
+        public bool IsDenied { get; set; } = false;
+
 
     }
 

@@ -4,6 +4,7 @@ using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Dat
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventPlanningAndManagementSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250721164231_AddIsDeniedToRegistration")]
+    partial class AddIsDeniedToRegistration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +128,10 @@ namespace EventPlanningAndManagementSystem.Data.Migrations
 
                     b.Property<bool>("IsDenied")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("RegisteredOn")
                         .HasColumnType("datetime2");
@@ -309,15 +316,15 @@ namespace EventPlanningAndManagementSystem.Data.Migrations
                         {
                             Id = "7699db7d-964f-4782-8209-d76562e0fece",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35ea1a79-2c0e-4267-a1b7-6c82a69f6982",
+                            ConcurrencyStamp = "792e9263-125c-447b-b699-b2d7742a7a1b",
                             Email = "admin@horizons.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@HORIZONS.COM",
                             NormalizedUserName = "ADMIN@HORIZONS.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHpgwZddS3AfP4vbcGmI/mygUj0RQ1/rNYO+Ob5FeZnDIKzeoffIj9TbPXN5ca9ofA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELVpPI15KCpDUVfKWYG5M4Q+WOo+E2AvoU73WBwuiAy5G9wtXR5Ken/sJ9KOi+M9pw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "43d1dc39-b049-44d8-a6c2-d30b54805bfd",
+                            SecurityStamp = "d5421025-fc9a-4705-857f-be3768a73d8b",
                             TwoFactorEnabled = false,
                             UserName = "admin@horizons.com"
                         });

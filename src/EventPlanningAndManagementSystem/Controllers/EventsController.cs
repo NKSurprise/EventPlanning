@@ -54,7 +54,7 @@ public class EventsController : BaseController
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public IActionResult Create()
     {
         var model = new AddEventInputModel
@@ -83,7 +83,7 @@ public class EventsController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Create(AddEventInputModel model)
     {
         if (!ModelState.IsValid)
@@ -124,7 +124,7 @@ public class EventsController : BaseController
         return RedirectToAction(nameof(Index));
     }
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(int id)
     {
         var ev = await _context.Events.FindAsync(id);
@@ -150,6 +150,7 @@ public class EventsController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(int id, EditEventViewModel model)
     {
         if (id != model.Id) return NotFound();
@@ -187,7 +188,7 @@ public class EventsController : BaseController
     }
 
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Delete(int id)
     {
         var ev = await _context.Events

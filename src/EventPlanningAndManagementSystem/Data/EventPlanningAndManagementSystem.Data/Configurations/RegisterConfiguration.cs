@@ -24,8 +24,6 @@ namespace EventPlanningAndManagementSystem.Data.Configurations
                    .HasForeignKey(r => r.UserId)
                    .OnDelete(DeleteBehavior.Restrict); 
 
-            builder.Property(r => r.Notes)
-                   .HasMaxLength(500);
         }
     }
 }

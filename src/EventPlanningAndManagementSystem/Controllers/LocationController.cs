@@ -6,7 +6,7 @@ using EventPlanningAndManagementSystem.ViewModels.Location;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Administrator")]
 public class LocationController : BaseController
 {
     private readonly ApplicationDbContext _context;
@@ -24,7 +24,6 @@ public class LocationController : BaseController
     }
 
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
