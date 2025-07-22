@@ -75,14 +75,40 @@ public class LocationController : BaseController
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
     [HttpPost]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Delete(int id)
     {
-        Location? location = await _context.Locations.FindAsync(id);
-        if (location == null) return NotFound();
+        var location = await _context.Locations.FindAsync(id);
+        if (location == null)
+            return NotFound();
 
-        _context.Locations.Remove(location);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+        // Delete all soft-deleted events that reference this location
+        var softDeletedEvents = await _context.Events
+            .Where(e => e.LocationId == id && e.IsDeleted)
+            .ToListAsync();
+
+        _context.Events.RemoveRange(softDeletedEvents);
+
+        try
+        {
+            _context.Locations.Remove(location);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        catch (DbUpdateException)
+        {
+            TempData["ErrorMessage"] = "Cannot delete this location because it's still referenced by active events.";
+            return RedirectToAction("ErrorDelete");
+        }
     }
+
+
+    public IActionResult ErrorDelete()
+    {
+        return View();
+    }
+
+
 }

@@ -79,15 +79,39 @@ namespace EventPlanningAndManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int id)
         {
             Category? category = await _context.Categories.FindAsync(id);
-            if (category == null) return NotFound();
+            if (category == null)
+                return NotFound();
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            // Delete all soft-deleted events that reference this location
+            var softDeletedEvents = await _context.Events
+                .Where(e => e.LocationId == id && e.IsDeleted)
+                .ToListAsync();
+
+            _context.Events.RemoveRange(softDeletedEvents);
+
+            try
+            {
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = "Cannot delete this location because it's still referenced by active events.";
+                return RedirectToAction("ErrorDelete");
+            }
         }
+        public IActionResult ErrorDelete()
+        {
+            return View();
+        }
+
+
     }
 }

@@ -57,13 +57,17 @@ namespace EventPlanningAndManagementSystem
 
             app.UseRouting();
 
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error500"); // Handles unhandled exceptions (500 errors)
-                app.UseStatusCodePagesWithReExecute("/Home/Error{0}"); // Handles 404, 403, etc.
-                app.UseHsts(); // Enforces HTTPS in production
+                app.UseDeveloperExceptionPage();
             }
-            
+            else
+            {
+                app.UseExceptionHandler("/Home/HandleError");
+                app.UseStatusCodePagesWithReExecute("/Home/HandleError", "?statusCode={0}");
+            }
+
+
 
             app.UseAuthentication();
             app.UseAuthorization();

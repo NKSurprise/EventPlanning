@@ -32,7 +32,7 @@
                                         <td class="text-center">
                                             <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                                 <a asp-action="Edit" asp-route-id="@location.Id" class="btn btn-warning btn-sm transition-btn">Edit</a>
-                                                <form asp-action="Delete" asp-route-id="@location.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this location?');">
+                                                <form asp-action="Delete" asp-route-id="@location.Id" method="post" class="d-inline">
                                                     @Html.AntiForgeryToken()
                                                     <button type="submit" class="btn btn-outline-danger btn-sm transition-btn">Delete</button>
                                                 </form>

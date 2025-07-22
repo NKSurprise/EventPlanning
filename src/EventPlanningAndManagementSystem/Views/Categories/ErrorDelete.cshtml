@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Delete Error";
+}
+
+<div class="alert alert-danger text-center mt-4">
+    <h4>Cannot delete item</h4>
+    <p>@TempData["ErrorMessage"]</p>
+    <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary">Back to Categories</a>
+</div>
