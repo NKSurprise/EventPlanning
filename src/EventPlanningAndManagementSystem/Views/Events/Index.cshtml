@@ -56,9 +56,13 @@
                             </a>
                             @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
                             {
-                                <div class="d-flex justify-content-between mt-2 gap-2">
-                                    <a asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-warning btn-sm w-50 transition-btn">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="@ev.Id" class="btn btn-danger btn-sm w-50 transition-btn">Delete</a>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-warning btn-sm w-50 me-2">Edit</a>
+
+                                    <form asp-controller="Events" asp-action="Delete" asp-route-id="@ev.Id" method="post" class="w-50">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
+                                    </form>
                                 </div>
                             }
                         </div>

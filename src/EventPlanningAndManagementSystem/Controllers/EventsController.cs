@@ -190,15 +190,18 @@ public class EventsController : BaseController
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var ev = await _context.Events
-            .Include(e => e.Category)
-            .Include(e => e.Location)
-            .FirstOrDefaultAsync(e => e.Id == id);
+        var ev = await _context.Events.FindAsync(id);
+        if (ev == null)
+        {
+            return NotFound();
+        }
 
-        if (ev == null) return NotFound();
+        _context.Events.Remove(ev);
+        await _context.SaveChangesAsync();
 
-        return View(ev);
+        return RedirectToAction("Index");
     }
+
 
     [Authorize]
     public async Task<IActionResult> Details(int id)
