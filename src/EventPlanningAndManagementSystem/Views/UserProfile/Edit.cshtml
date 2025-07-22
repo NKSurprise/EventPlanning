@@ -4,49 +4,63 @@
     ViewData["Title"] = "Edit Profile";
 }
 
-<h2 class="mt-4">Edit Profile</h2>
-<hr />
-
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
-
-    <div class="mb-3">
-        <label asp-for="FullName" class="form-label">Username</label>
-        <input asp-for="FullName" class="form-control" />
-        <span asp-validation-for="FullName" class="text-danger"></span>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 p-4 bg-white">
+                <h2 class="card-title mb-4 fw-semibold text-center">@ViewData["Title"]</h2>
+                <form asp-action="Edit" method="post" enctype="multipart/form-data" autocomplete="off">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label">Username</label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="BirthDate" class="form-label">Birth Date</label>
+                        <input asp-for="BirthDate" class="form-control" type="text" value="@Model.BirthDate?.ToString("dd-MM-yyyy")" />
+                        <span asp-validation-for="BirthDate" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label">Address</label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Bio" class="form-label">Bio</label>
+                        <textarea asp-for="Bio" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Bio" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Profile Picture</label>
+                        <input asp-for="ProfilePicture" type="file" class="form-control" />
+                        @if (!string.IsNullOrEmpty(Model.ExistingProfilePictureUrl))
+                        {
+                            <div class="text-center mt-3">
+                                <img src="@Model.ExistingProfilePictureUrl" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;" />
+                            </div>
+                        }
+                    </div>
+                    <div class="d-flex flex-column flex-md-row gap-2 mt-4 justify-content-center">
+                        <button type="submit" class="btn btn-primary px-4 transition-btn">Save Changes</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4 transition-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="BirthDate" class="form-label">Birth Date</label>
-        <input asp-for="BirthDate" class="form-control" type="text" value="@Model.BirthDate?.ToString("dd-MM-yyyy")" />
-        <span asp-validation-for="BirthDate" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Address" class="form-label">Address</label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Bio" class="form-label">Bio</label>
-        <textarea asp-for="Bio" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Bio" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Profile Picture</label>
-        <input asp-for="ProfilePicture" type="file" class="form-control" />
-        @if (!string.IsNullOrEmpty(Model.ExistingProfilePictureUrl))
-        {
-            <img src="@Model.ExistingProfilePictureUrl" class="img-thumbnail mt-2" style="max-width: 150px;" />
-        }
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .transition-btn {
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .transition-btn:hover, .transition-btn:focus {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        filter: brightness(0.97);
+    }
+</style>
