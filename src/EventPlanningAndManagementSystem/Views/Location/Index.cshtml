@@ -4,31 +4,63 @@
     ViewData["Title"] = "Locations";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
+                        <h2 class="card-title mb-0 fw-semibold">@ViewData["Title"]</h2>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-action="Create" class="btn btn-success transition-btn">Add Location</a>
+                            <a asp-controller="Events" asp-action="Index" class="btn btn-outline-secondary transition-btn">Back</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover table-borderless mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var location in Model)
+                                {
+                                    <tr class="transition-table-row">
+                                        <td class="fw-medium">@location.Name</td>
+                                        <td class="text-center">
+                                            <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                                                <a asp-action="Edit" asp-route-id="@location.Id" class="btn btn-warning btn-sm transition-btn">Edit</a>
+                                                <form asp-action="Delete" asp-route-id="@location.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this location?');">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm transition-btn">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a asp-action="Create" class="btn btn-primary mb-3">Add Location</a>
-<a asp-controller="Events" asp-action="Index" class="btn btn-primary mb-3">Back</a>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var location in Model)
-        {
-            <tr>
-                <td>@location.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@location.Id" class="btn btn-sm btn-warning">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@location.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this location?');">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<style>
+    .transition-btn {
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .transition-btn:hover, .transition-btn:focus {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        filter: brightness(0.97);
+    }
+    .transition-table-row {
+        transition: background 0.2s;
+    }
+    .transition-table-row:hover {
+        background: #f8f9fa;
+    }
+</style>
