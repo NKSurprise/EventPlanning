@@ -70,6 +70,27 @@
                 </div>
             }
         </div>
+
+       <div class="mt-4 d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new {
+        page,
+        searchTerm = Context.Request.Query["searchTerm"],
+        categoryId = Context.Request.Query["categoryId"]
+    }), new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        UlElementClasses = new[] { "pagination", "justify-content-center", "flex-wrap" },
+        ContainerDivClasses = new[] { "d-inline-block" },
+        MaximumPageNumbersToDisplay = 5,
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+    })
+</div>
+
+
     }
     else
     {
