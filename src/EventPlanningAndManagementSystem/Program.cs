@@ -43,7 +43,7 @@ namespace EventPlanningAndManagementSystem
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IRegistrationService, RegistrationService>();
             builder.Services.AddScoped<ILocationService, LocationService>();
-
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
             //builder.Services.AddControllersWithViews();
