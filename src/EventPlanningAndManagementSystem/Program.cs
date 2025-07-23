@@ -40,7 +40,7 @@ namespace EventPlanningAndManagementSystem
 
 
             builder.Services.AddScoped<IEventService, EventService>();
-
+            builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 
             //builder.Services.AddControllersWithViews();
