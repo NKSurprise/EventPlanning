@@ -2,34 +2,22 @@
 using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models;
 using EventPlanningAndManagementSystem.ViewModels.Event;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static EventPlanningAndManagementSystem.EventPlanningAndManagementSystem.GCommon.ValidationConstatnts.Event;
+using System.Globalization;
 
 namespace EventPlanningAndManagementSystem.Services
 {
-    /// <summary>
-    /// Concrete implementation of <see cref="IEventService"/> that talks directly to the EF Core
-    /// <see cref="ApplicationDbContext"/>.  The service hides all data‑access details from the controllers
-    /// and exposes simple async methods that return strongly‑typed view‑models ready for the UI layer.
-    /// </summary>
     public class EventService : IEventService
     {
         private readonly ApplicationDbContext context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> userManager;
 
         public EventService(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             this.context = context;
-            _userManager = userManager;
+            this.userManager = userManager;
         }
-
-        #region Queries
 
         public async Task<IEnumerable<EventIndexViewModel>> GetAllEventsAsync(string? userId, string? search = null, int? categoryId = null)
         {
@@ -37,123 +25,106 @@ namespace EventPlanningAndManagementSystem.Services
                 .AsNoTracking()
                 .Include(e => e.Location)
                 .Include(e => e.Category)
-                .Where(e => !e.IsDeleted) 
+                .Where(e => !e.IsDeleted)
                 .OrderByDescending(e => e.PublishedOn)
                 .AsQueryable();
 
-
             if (!string.IsNullOrWhiteSpace(search))
-            {
                 query = query.Where(e => e.Name.Contains(search));
-            }
 
-            if (categoryId.HasValue && categoryId.Value > 0)
-            {
+            if (categoryId.HasValue)
                 query = query.Where(e => e.CategoryId == categoryId.Value);
-            }
 
-            var events = await query
-                .Select(e => new EventIndexViewModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    ImageUrl = e.ImageUrl,
-                    PublishedOn = e.PublishedOn,
-                    CategoryId = e.CategoryId,
-                    CategoryName = e.Category.Name,
-                    LocationId = e.LocationId
-                })
-                .ToListAsync();
-
-            return events;
+            return await query.Select(e => new EventIndexViewModel
+            {
+                Id = e.Id,
+                Name = e.Name,
+                ImageUrl = e.ImageUrl,
+                PublishedOn = e.PublishedOn,
+                CategoryId = e.CategoryId,
+                CategoryName = e.Category.Name,
+                LocationId = e.LocationId
+            }).ToListAsync();
         }
 
-
-        public async Task<EventDetailsViewModel?> GetEventDetailsAsync(int? id, string userId)
+        public async Task<EventDetailsViewModel?> GetEventDetailsAsync(int? id, string? userId)
         {
-            if (id == null)
-                return null;
+            if (id == null) return null;
 
-            Event? eventModel = await this.context
-                .Events
-                .Include(ev => ev.Location)
-                .Include(ev => ev.Category)
-                .Include(ev => ev.Publisher)
-                .Include(ev => ev.Registrations)
+            var e = await context.Events
+                .Include(x => x.Category)
+                .Include(x => x.Location)
+                .Include(x => x.Publisher)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(ev => ev.Id == id.Value);
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
 
+            if (e == null) return null;
 
-            if (eventModel == null)
-                return null;
-            var isRegistered = await context.Registrations
-            .AnyAsync(r => r.EventId == id && r.UserId == userId);
+            var isRegistered = await context.Registrations.AnyAsync(r => r.EventId == id && r.UserId == userId);
 
             return new EventDetailsViewModel
             {
-                Id = eventModel.Id,
-                Name = eventModel.Name,
-                ImageUrl = eventModel.ImageUrl,
-                Description = eventModel.Description,
-                PublishedOn = eventModel.PublishedOn.ToString(PublishedOnFormat),
-                CategoryName = eventModel.Category.Name,
-                LocationName = eventModel.Location.Name,
-                PublisherName = eventModel.Publisher.UserName,
+                Id = e.Id,
+                Name = e.Name,
+                ImageUrl = e.ImageUrl,
+                Description = e.Description,
+                PublishedOn = e.PublishedOn.ToString("dd-MM-yyyy"),
+                CategoryName = e.Category.Name,
+                LocationName = e.Location.Name,
+                PublisherName = e.Publisher.UserName,
                 IsUserRegistered = isRegistered
             };
-
         }
-
-        #endregion
-
-        #region Commands
 
         public async Task<bool> AddEventAsync(string userId, AddEventInputModel inputModel)
         {
-            if (inputModel == null)
+            if (!DateTime.TryParseExact(inputModel.PublishedOn, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
             {
-                return false;
+                date = DateTime.UtcNow;
             }
 
-            if (!DateTime.TryParseExact(inputModel.PublishedOn, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out var publishedOn))
-            {
-                publishedOn = DateTime.Now;
-            }
-
-            var entity = new Event
+            var newEvent = new Event
             {
                 Name = inputModel.Name,
                 Description = inputModel.Description,
                 ImageUrl = inputModel.ImageUrl,
-                PublishedOn = publishedOn,
+                PublishedOn = date,
                 CategoryId = inputModel.CategoryId,
                 LocationId = inputModel.LocationId,
                 PublisherId = userId,
                 IsDeleted = false
             };
 
-            context.Events.Add(entity);
-            var saved = await context.SaveChangesAsync();
-            inputModel.Id = entity.Id;
-            return saved > 0;
+            context.Events.Add(newEvent);
+            return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<AddEventInputModel> PrepareNewEventFormModelAsync()
+        {
+            return new AddEventInputModel
+            {
+                PublishedOn = DateTime.Now.ToString("dd-MM-yyyy"),
+                Categories = await GetCategorySelectListAsync(),
+                Locations = await GetLocationSelectListAsync()
+            };
+        }
+
+        public async Task<AddEventInputModel> PrepareNewEventFormModelAsync(AddEventInputModel model)
+        {
+            model.Categories = await GetCategorySelectListAsync();
+            model.Locations = await GetLocationSelectListAsync();
+            return model;
         }
 
         public async Task<EditEventViewModel?> GetEventForEditAsync(string userId, int? id)
         {
-            if (id == null)
-            {
-                return null;
-            }
+            if (id == null) return null;
 
             var e = await context.Events
-                .Include(ev => ev.Location)
-                .Include(ev => ev.Category)
-                .FirstOrDefaultAsync(ev => ev.Id == id.Value && ev.PublisherId == userId);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ev => ev.Id == id && ev.PublisherId == userId && !ev.IsDeleted);
 
-            if (e == null)
-            {
-                return null;
-            }
+            if (e == null) return null;
 
             return new EditEventViewModel
             {
@@ -161,33 +132,59 @@ namespace EventPlanningAndManagementSystem.Services
                 Name = e.Name,
                 Description = e.Description,
                 ImageUrl = e.ImageUrl,
-                PublishedOn = e.PublishedOn,
                 CategoryId = e.CategoryId,
                 LocationId = e.LocationId,
-                Categories = new SelectList(await context.Categories.AsNoTracking().ToListAsync(), "Id", "Name", e.CategoryId),
-                Locations = new SelectList(await context.Locations.AsNoTracking().ToListAsync(), "Id", "Name", e.LocationId)
+                PublishedOn = e.PublishedOn,
+                Categories = await GetCategorySelectListAsync(e.CategoryId),
+                Locations = await GetLocationSelectListAsync(e.LocationId)
             };
+        }
+
+        public async Task<EditEventViewModel> PrepareEditEventModelAsync(EditEventViewModel model)
+        {
+            model.Categories = await GetCategorySelectListAsync(model.CategoryId);
+            model.Locations = await GetLocationSelectListAsync(model.LocationId);
+            return model;
         }
 
         public async Task<bool> PersistUpdatedEventAsync(string userId, EditEventViewModel inputModel)
         {
             var e = await context.Events.FirstOrDefaultAsync(ev => ev.Id == inputModel.Id && ev.PublisherId == userId);
-            if (e == null)
-            {
-                return false;
-            }
+            if (e == null) return false;
 
             e.Name = inputModel.Name;
             e.Description = inputModel.Description;
             e.ImageUrl = inputModel.ImageUrl;
-            e.PublishedOn = inputModel.PublishedOn;
             e.CategoryId = inputModel.CategoryId;
             e.LocationId = inputModel.LocationId;
+            e.PublishedOn = inputModel.PublishedOn;
 
             context.Events.Update(e);
             return await context.SaveChangesAsync() > 0;
         }
 
-        #endregion
+        public async Task<bool> DeleteEventAsync(int eventId, string userId)
+        {
+            var ev = await context.Events.FirstOrDefaultAsync(e => e.Id == eventId && e.PublisherId == userId);
+            if (ev == null) return false;
+
+            context.Events.Remove(ev);
+            return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<SelectList> GetCategorySelectListAsync(int? selectedId = null)
+        {
+            var categories = await context.Categories.AsNoTracking().ToListAsync();
+            return new SelectList(categories, "Id", "Name", selectedId);
+        }
+
+        private async Task<SelectList> GetLocationSelectListAsync(int? selectedId = null)
+        {
+            var locations = await context.Locations.AsNoTracking().ToListAsync();
+            return new SelectList(locations, "Id", "Name", selectedId);
+        }
+
     }
 }
+
+

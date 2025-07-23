@@ -1,53 +1,36 @@
 ﻿using EventPlanningAndManagementSystem.Controllers;
 using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data;
-using EventPlanningAndManagementSystem.Data.EventPlanningAndManagementSystem.Data.Models;
-using X.PagedList;
+using EventPlanningAndManagementSystem.ViewModels.Event;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 using X.PagedList.Extensions;
-using EventPlanningAndManagementSystem.ViewModels.Event;
 
 public class EventsController : BaseController
 {
-    private readonly ApplicationDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
     private readonly IEventService _eventService;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public EventsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IEventService eventService)
+    public EventsController(IEventService eventService, UserManager<IdentityUser> userManager)
     {
-        _context = context;
-        _userManager = userManager;
         _eventService = eventService;
+        _userManager = userManager;
     }
-
 
     [HttpGet]
     public async Task<IActionResult> Index(string? searchTerm, int? categoryId, int? page)
     {
         var userId = _userManager.GetUserId(User);
-        var events = await _eventService.GetAllEventsAsync(userId);
-
-        if (!string.IsNullOrWhiteSpace(searchTerm))
-        {
-            searchTerm = searchTerm.ToLower();
-            events = events.Where(e => e.Name.ToLower().Contains(searchTerm)).ToList();
-        }
-
-        if (categoryId.HasValue && categoryId.Value > 0)
-        {
-            events = events.Where(e => e.CategoryId == categoryId.Value).ToList();
-        }
+        var events = await _eventService.GetAllEventsAsync(userId, searchTerm, categoryId);
 
         ViewData["CurrentFilter"] = searchTerm;
         ViewData["CurrentCategory"] = categoryId;
-        ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name");
+        ViewBag.Categories = await _eventService.GetCategorySelectListAsync();
 
         int pageSize = 8;
         int pageNumber = page ?? 1;
-
         var pagedEvents = events.ToPagedList(pageNumber, pageSize);
 
         return View(pagedEvents);
@@ -55,29 +38,9 @@ public class EventsController : BaseController
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        var model = new AddEventInputModel
-        {
-            Locations = _context.Locations
-                .Select(l => new SelectListItem
-                {
-                    Value = l.Id.ToString(),
-                    Text = l.Name
-                })
-                .ToList(),
-
-            Categories = _context.Categories
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Name
-                })
-                .ToList(),
-
-            PublishedOn = DateTime.Now.ToString("dd-MM-yyyy")
-        };
-
+        var model = await _eventService.PrepareNewEventFormModelAsync();
         return View(model);
     }
 
@@ -87,96 +50,40 @@ public class EventsController : BaseController
     {
         if (!ModelState.IsValid)
         {
-            model.Locations = _context.Locations
-                .Select(l => new SelectListItem
-                {
-                    Value = l.Id.ToString(),
-                    Text = l.Name
-                })
-                .ToList();
-
-            model.Categories = _context.Categories
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Name
-                })
-                .ToList();
-
+            model = await _eventService.PrepareNewEventFormModelAsync(model);
             return View(model);
         }
 
-        var newEvent = new Event
-        {
-            Name = model.Name,
-            Description = model.Description,
-            ImageUrl = model.ImageUrl,
-            PublishedOn = DateTime.ParseExact(model.PublishedOn, "dd-MM-yyyy", null),
-            CategoryId = model.CategoryId,
-            LocationId = model.LocationId,
-            PublisherId = _userManager.GetUserId(User)!
-        };
-
-        _context.Events.Add(newEvent);
-        await _context.SaveChangesAsync();
+        var userId = _userManager.GetUserId(User);
+        await _eventService.AddEventAsync(userId, model);
 
         return RedirectToAction(nameof(Index));
     }
+
     [HttpGet]
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(int id)
     {
-        var ev = await _context.Events.FindAsync(id);
-        if (ev == null) return NotFound();
-
-        var model = new EditEventViewModel
-        {
-            Id = ev.Id,
-            Name = ev.Name,
-            ImageUrl = ev.ImageUrl,
-            Description = ev.Description,
-            CategoryId = ev.CategoryId,
-            LocationId = ev.LocationId,
-            PublishedOn = ev.PublishedOn
-        };
-
-        ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", ev.CategoryId);
-        ViewBag.Locations = new SelectList(_context.Locations, "Id", "Name", ev.LocationId);
+        var userId = _userManager.GetUserId(User);
+        var model = await _eventService.GetEventForEditAsync(userId, id);
+        if (model == null) return NotFound();
 
         return View(model);
     }
-
 
     [HttpPost]
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(int id, EditEventViewModel model)
     {
-        if (id != model.Id) return NotFound();
-
-        if (!ModelState.IsValid)
+        if (id != model.Id || !ModelState.IsValid)
         {
-            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", model.CategoryId);
-            ViewBag.Locations = new SelectList(_context.Locations, "Id", "Name", model.LocationId);
+            model = await _eventService.PrepareEditEventModelAsync(model);
             return View(model);
         }
 
-        var ev = await _context.Events.FindAsync(id);
-        if (ev == null) return NotFound();
-
-        // Update allowed properties only
-        ev.Name = model.Name;
-        ev.Description = model.Description;
-        ev.ImageUrl = model.ImageUrl;
-        ev.CategoryId = model.CategoryId;
-        ev.LocationId = model.LocationId;
-        ev.PublishedOn = model.PublishedOn;
-
-        try
-        {
-            _context.Update(ev);
-            await _context.SaveChangesAsync();
-        }
-        catch (Exception ex)
+        var userId = _userManager.GetUserId(User);
+        var success = await _eventService.PersistUpdatedEventAsync(userId, model);
+        if (!success)
         {
             ModelState.AddModelError("", "Error saving changes.");
             return View(model);
@@ -185,31 +92,20 @@ public class EventsController : BaseController
         return RedirectToAction(nameof(Index));
     }
 
-
     [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var ev = await _context.Events.FindAsync(id);
-        if (ev == null)
-        {
-            return NotFound();
-        }
-
-        _context.Events.Remove(ev);
-        await _context.SaveChangesAsync();
-
+        var userId = _userManager.GetUserId(User);
+        await _eventService.DeleteEventAsync(id, userId);
         return RedirectToAction("Index");
     }
-
 
     [Authorize]
     public async Task<IActionResult> Details(int id)
     {
-        string userId = this.GetUserId();
-        EventDetailsViewModel? model = await _eventService.GetEventDetailsAsync(id,userId);
-
+        var userId = _userManager.GetUserId(User);
+        var model = await _eventService.GetEventDetailsAsync(id, userId);
         return View(model);
     }
-
 }
