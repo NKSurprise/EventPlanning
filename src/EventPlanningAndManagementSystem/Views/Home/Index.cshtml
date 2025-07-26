@@ -1,28 +1,66 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Evently | Plan Events Like a Pro";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
-            <div class="card shadow-sm border-0 p-4 text-center bg-white">
-                <h1 class="display-4 mb-3 fw-bold">Welcome to EventManager</h1>
-                <p class="lead mb-4">Plan, register, and manage events with ease.</p>
-                 <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
-                        <a class="btn btn-outline-primary btn-lg transition-btn" href="/Identity/Account/Login">Login</a>
-                        <a class="btn btn-primary btn-lg transition-btn" href="/Identity/Account/Register">Register</a>
-                    </div>
+<!-- FEATURES SECTION -->
+<section class="py-5 bg-white text-dark">
+    <div class="container">
+        <h2 class="text-center display-5 fw-bold mb-5">Why Evently?</h2>
+        <div class="row g-5">
+            <div class="col-md-4 text-center">
+                <i class="bi bi-calendar2-event display-4 text-primary mb-3"></i>
+                <h4 class="fw-semibold">Effortless Scheduling</h4>
+                <p class="text-muted">Plan and organize events with a few clicks. Say goodbye to back-and-forth emails.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="bi bi-person-check display-4 text-success mb-3"></i>
+                <h4 class="fw-semibold">Easy Registration</h4>
+                <p class="text-muted">Custom forms and instant confirmations. Attendees register in seconds.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="bi bi-graph-up-arrow display-4 text-danger mb-3"></i>
+                <h4 class="fw-semibold">Smart Insights</h4>
+                <p class="text-muted">Real-time analytics to track attendance, engagement, and ROI.</p>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<style>
-    .transition-btn {
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    }
-    .transition-btn:hover, .transition-btn:focus {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-        filter: brightness(0.97);
-    }
-</style>
+<!-- TESTIMONIALS -->
+<section class="py-5 bg-light text-dark">
+    <div class="container">
+        <h2 class="text-center display-5 fw-bold mb-5">Loved by Organizers Everywhere</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-4 bg-white shadow rounded-4 h-100">
+                    <p>"Evently cut our event planning time in half. Intuitive, powerful, and beautifully designed."</p>
+                    <hr>
+                    <strong>— Sarah L., Marketing Director</strong>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 bg-white shadow rounded-4 h-100">
+                    <p>"I used to dread managing RSVPs. Evently made it seamless and even fun."</p>
+                    <hr>
+                    <strong>— Tom K., Conference Organizer</strong>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 bg-white shadow rounded-4 h-100">
+                    <p>"The analytics blew our team away. We know exactly what works now."</p>
+                    <hr>
+                    <strong>— Anita D., Event Consultant</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="display-5 fw-bold mb-3">Ready to Elevate Your Next Event?</h2>
+        <p class="lead mb-4">Join thousands of professionals using Evently to create unforgettable experiences.</p>
+        <a class="btn btn-light btn-lg px-5 py-3" href="/Identity/Account/Register">Sign Up Free</a>
+    </div>
+</section>

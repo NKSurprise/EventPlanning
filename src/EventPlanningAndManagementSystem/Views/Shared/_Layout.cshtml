@@ -1,79 +1,87 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EventPlanningAndManagementSystem</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EventPlanningAndManagementSystem.styles.css" asp-append-version="true" />
-    <style>
-        .navbar-nav .nav-link {
-            transition: color 0.2s, background 0.2s;
-            border-radius: 0.25rem;
-        }
-        .navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus {
-            background: #f8f9fa;
-            color: #0d6efd;
-        }
-        .navbar {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 1.05rem;
-        }
-        .footer {
-            background: #fff;
-            box-shadow: 0 -1px 8px rgba(0,0,0,0.03);
-        }
-    </style>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - EventPlanningAndManagementSystem</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/EventPlanningAndManagementSystem.styles.css" asp-append-version="true" />
+	<style>
+		.navbar-nav .nav-link {
+			transition: color 0.2s, background 0.2s;
+			border-radius: 0.25rem;
+		}
+
+			.navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus {
+				background: #f8f9fa;
+				color: #0d6efd;
+			}
+
+		.navbar {
+			font-family: 'Segoe UI', Arial, sans-serif;
+			font-size: 1.05rem;
+		}
+
+		.footer {
+			background: #fff;
+			box-shadow: 0 -1px 8px rgba(0,0,0,0.03);
+		}
+	</style>
 </head>
 <body class="bg-light">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">EventPlanningAndManagementSystem</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 gap-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Location" asp-action="Index">Locations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Registration" asp-action="Index">My Events</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Admin" asp-action="PendingRegistrations">
-                                <i class="fas fa-plus"></i> Confirm Registrations
-                            </a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
+			<div class="container-fluid">
+				<a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Evently</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1 gap-1">
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+						</li>
+						@if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-controller="Location" asp-action="Index">Locations</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Categories</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-controller="Admin" asp-action="PendingRegistrations">
+									<i class="fas fa-plus"></i> Confirm Registrations
+								</a>
+							</li>
+						}
 
-    <footer class="footer border-top text-muted py-3 mt-5">
-        <div class="container text-center">
-            &copy; 2025 - EventPlanningAndManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-controller="Registration" asp-action="Index">My Events</a>
+						</li>
+
+					</ul>
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="footer border-top text-muted py-3 mt-5">
+		<div class="container text-center">
+			&copy; 2025 - EventPlanningAndManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -5,9 +5,9 @@
 }
 
 <div class="container py-4">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+    <div class="d-flex flex-column flex-md-row align-items-start mb-4 gap-3">
         <h2 class="mb-0">@ViewData["Title"]</h2>
-        <form method="get" asp-action="Index" class="d-flex gap-2 align-items-start flex-row">
+        <form method="get" asp-action="Index" class="d-flex gap-3 align-items-start flex-row">
             <input type="text" name="searchTerm" placeholder="Search events..." class="form-control w-50" value="@Context.Request.Query["searchTerm"]" />
             <select name="categoryId" class="form-select w-50">
                 <option value="">-- All Categories --</option>
@@ -22,7 +22,7 @@
         {
                 @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
                 {
-                    <a asp-action="Create" class="btn btn-success transition-btn"><i class="fas fa-plus"></i> Add Event</a>
+                    <a asp-action="Create" class="btn btn-primary transition-btn"><i class="fas fa-plus"></i> Add Event</a>
                 }
         }
     </div>
@@ -48,17 +48,6 @@
                             <a asp-action="Details" asp-route-id="@ev.Id" class="btn btn-info w-100 mt-auto transition-btn">
                                 <i class="fas fa-info-circle"></i> Details
                             </a>
-                            @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
-                            {
-                                <div class="d-flex justify-content-between mt-2">
-                                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-warning btn-sm w-50 me-2">Edit</a>
-
-                                    <form asp-controller="Events" asp-action="Delete" asp-route-id="@ev.Id" method="post" class="w-50">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
-                                    </form>
-                                </div>
-                            }
                         </div>
                     </div>
                 </div>
