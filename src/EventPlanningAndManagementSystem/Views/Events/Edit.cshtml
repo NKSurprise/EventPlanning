@@ -22,14 +22,14 @@
                         </div>
                         <div class="col-sm-6">
                             <label asp-for="CategoryId" class="form-label">Select Category</label>
-                            <select asp-for="CategoryId" class="form-select" asp-items="(SelectList)ViewBag.Categories">
+                            <select asp-for="CategoryId" class="form-select" asp-items="Model.Categories">
                                 <option value="">-- Select Category --</option>
                             </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
                         <div class="col-sm-6">
                             <label asp-for="LocationId" class="form-label">Select Location</label>
-                            <select asp-for="LocationId" class="form-select" asp-items="(SelectList)ViewBag.Locations">
+                            <select asp-for="LocationId" class="form-select" asp-items="Model.Locations">
                                 <option value="">-- Select Location --</option>
                             </select>
                             <span asp-validation-for="LocationId" class="text-danger"></span>
