@@ -9,6 +9,8 @@
         public string CategoryName { get; set; } = null!;   
         public string? PublisherName { get; set; }
         public string PublishedOn { get; set; } = null!;
+
+        public bool IsConfirmed { get; set; }
         public bool IsUserRegistered { get; set; }
 
     }

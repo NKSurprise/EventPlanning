@@ -57,7 +57,7 @@
                     <form asp-controller="Registration" asp-action="ToggleRegister" method="post" class="d-inline">
                         <input type="hidden" name="eventId" value="@Model.Id" />
                         <button type="submit" class="btn btn-outline-primary transition-btn">
-                            <i class="fas fa-star"></i> @(Model.IsUserRegistered ? "Unregister" : "Register")
+                            <i class="fas fa-star"></i> @(Model.IsUserRegistered ? (Model.IsConfirmed ? "Remove from Event" : "Leave Waitlist") : "Join Waitlist")
                         </button>
                     </form>
                 </div>

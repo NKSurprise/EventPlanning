@@ -43,7 +43,12 @@ public class AdminService : IAdminService
         var registration = await _context.Registrations.FindAsync(id);
         if (registration == null || registration.IsConfirmed) return false;
 
+        var currentEvent = await _context.Events.FindAsync(registration.EventId);
+        if (currentEvent == null) return false;
+
         registration.IsDenied = true;
+        registration.IsConfirmed = false;
+        currentEvent.Registrations.Remove(registration);
         await _context.SaveChangesAsync();
         return true;
     }

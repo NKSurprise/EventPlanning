@@ -8,23 +8,10 @@
             <div class="card shadow-sm border-0 p-4 text-center bg-white">
                 <h1 class="display-4 mb-3 fw-bold">Welcome to EventManager</h1>
                 <p class="lead mb-4">Plan, register, and manage events with ease.</p>
-                @if (User.Identity?.IsAuthenticated == true)
-                {
-                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mb-2">
-                        <a class="btn btn-primary btn-lg transition-btn" asp-controller="Events" asp-action="Index">Browse Events</a>
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            <a class="btn btn-outline-secondary btn-lg transition-btn" asp-controller="Events" asp-action="Create">Create Event</a>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                 <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
                         <a class="btn btn-outline-primary btn-lg transition-btn" href="/Identity/Account/Login">Login</a>
                         <a class="btn btn-primary btn-lg transition-btn" href="/Identity/Account/Register">Register</a>
                     </div>
-                }
             </div>
         </div>
     </div>

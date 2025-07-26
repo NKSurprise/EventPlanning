@@ -15,6 +15,10 @@ namespace EventPlanningAndManagementSystem.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity?.IsAuthenticated == true)
+        {
+            return RedirectToAction("Index", "Events");
+        }
             return View();
         }
 

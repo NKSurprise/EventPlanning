@@ -55,6 +55,7 @@ namespace EventPlanningAndManagementSystem.Services
                 .Include(x => x.Category)
                 .Include(x => x.Location)
                 .Include(x => x.Publisher)
+                .Include(x => x.Registrations)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
 
@@ -72,7 +73,8 @@ namespace EventPlanningAndManagementSystem.Services
                 CategoryName = e.Category.Name,
                 LocationName = e.Location.Name,
                 PublisherName = e.Publisher.UserName,
-                IsUserRegistered = isRegistered
+                IsUserRegistered = isRegistered,
+                IsConfirmed = e.Registrations.Any(r => r.IsConfirmed),
             };
         }
 

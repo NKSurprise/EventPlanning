@@ -8,6 +8,5 @@
         public DateTime RegisteredOn { get; set; }
         public bool IsConfirmed { get; set; }
         public bool IsDenied { get; set; } = false; 
-        public string? Notes { get; set; } 
     }
 }
