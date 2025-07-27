@@ -90,53 +90,40 @@ namespace EventPlanningAndManagementSystem.Tests.Services
         public async Task DenyRegistrationAsync_ShouldSetIsDenied()
         {
             var db = GetDbContext();
+            db.Users.Add(new IdentityUser { Id = "user2", Email = "user2@mail.com" });
 
-            // Required entities
-            var user = new IdentityUser { Id = "user2", Email = "user2@mail.com", UserName = "user2@mail.com" };
-            var category = new Category { Id = 1, Name = "Cat" };
-            var location = new Location { Id = 1, Name = "Loc" };
-            var ev = new Event
+            db.Registrations.Add(new Registration
+            {
+                Id = 6,
+                UserId = "user2", // ✅ REQUIRED
+                EventId = 1,
+                IsConfirmed = false,
+                IsDenied = false
+            });
+
+            db.Events.Add(new Event
             {
                 Id = 1,
                 Name = "Event",
                 Description = "desc",
-                PublisherId = user.Id,
-                CategoryId = category.Id,
-                LocationId = location.Id,
+                PublisherId = "user2",
+                CategoryId = 1,
+                LocationId = 1,
                 PublishedOn = DateTime.Now
-            };
+            });
 
-            await db.Users.AddAsync(user);
-            await db.Categories.AddAsync(category);
-            await db.Locations.AddAsync(location);
-            await db.Events.AddAsync(ev);
+            db.Categories.Add(new Category { Id = 1, Name = "Cat" });
+            db.Locations.Add(new Location { Id = 1, Name = "Loc" });
+
             await db.SaveChangesAsync();
 
-            var registration = new Registration
-            {
-                Id = 6,
-                UserId = user.Id,
-                EventId = ev.Id,
-                IsConfirmed = false,
-                IsDenied = false
-            };
-
-            await db.Registrations.AddAsync(registration);
-            await db.SaveChangesAsync();
-
-            // Act
             var service = new AdminService(db);
             var success = await service.DenyRegistrationAsync(6);
 
-            // Assert
-            success.Should().BeTrue("the registration should have been found and denied");
-
+            success.Should().BeTrue();
             var reg = await db.Registrations.FindAsync(6);
-            reg.Should().NotBeNull("the registration should still exist");
-            reg!.IsDenied.Should().BeTrue("the registration should be marked as denied");
+            reg!.IsDenied.Should().BeTrue();
         }
-
-
 
         [Fact]
         public async Task DenyRegistrationAsync_ShouldReturnFalseIfAlreadyConfirmed()

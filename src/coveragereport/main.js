@@ -213,7 +213,7 @@ var assemblies = [
   {
     "name": "EventPlanningAndManagementSystem",
     "classes": [
-      { "name": "AddEventInputModel", "rp": "EventPlanningAndManagementSystem_AddEventInputModel.html", "cl": 8, "ucl": 1, "cal": 9, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "AddEventInputModel", "rp": "EventPlanningAndManagementSystem_AddEventInputModel.html", "cl": 6, "ucl": 3, "cal": 9, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AdminController", "rp": "EventPlanningAndManagementSystem_AdminController.html", "cl": 0, "ucl": 16, "cal": 16, "tl": 34, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AdminService", "rp": "EventPlanningAndManagementSystem_AdminService.html", "cl": 37, "ucl": 0, "cal": 37, "tl": 55, "cb": 5, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Areas_Admin_Views__ViewStart", "rp": "EventPlanningAndManagementSystem_Areas_Admin_Views__ViewStart.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 3, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -229,15 +229,14 @@ var assemblies = [
       { "name": "AspNetCoreGeneratedDocument.Views_Events_Create", "rp": "EventPlanningAndManagementSystem_Views_Events_Create.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 70, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Events_Details", "rp": "EventPlanningAndManagementSystem_Views_Events_Details.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 77, "cb": 0, "tb": 20, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Events_Edit", "rp": "EventPlanningAndManagementSystem_Views_Events_Edit.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 71, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "AspNetCoreGeneratedDocument.Views_Events_Index", "rp": "EventPlanningAndManagementSystem_Views_Events_Index.html", "cl": 0, "ucl": 34, "cal": 34, "tl": 99, "cb": 0, "tb": 54, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "AspNetCoreGeneratedDocument.Views_Home_Index", "rp": "EventPlanningAndManagementSystem_Views_Home_Index.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 66, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "AspNetCoreGeneratedDocument.Views_Events_Index", "rp": "EventPlanningAndManagementSystem_Views_Events_Index.html", "cl": 0, "ucl": 26, "cal": 26, "tl": 110, "cb": 0, "tb": 54, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "AspNetCoreGeneratedDocument.Views_Home_Index", "rp": "EventPlanningAndManagementSystem_Views_Home_Index.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 28, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Home_Privacy", "rp": "EventPlanningAndManagementSystem_Views_Home_Privacy.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 6, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Location_Create", "rp": "EventPlanningAndManagementSystem_Views_Location_Create.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 37, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Location_Edit", "rp": "EventPlanningAndManagementSystem_Views_Location_Edit.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 38, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Location_ErrorDelete", "rp": "EventPlanningAndManagementSystem_Views_Location_ErrorDelete.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Location_Index", "rp": "EventPlanningAndManagementSystem_Views_Location_Index.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 66, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Registration_Index", "rp": "EventPlanningAndManagementSystem_Views_Registration_Index.html", "cl": 0, "ucl": 17, "cal": 17, "tl": 51, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "AspNetCoreGeneratedDocument.Views_Shared__Layout", "rp": "EventPlanningAndManagementSystem_Views_Shared__Layout.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 87, "cb": 0, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Shared__LoginPartial", "rp": "EventPlanningAndManagementSystem_Views_Shared__LoginPartial.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 49, "cb": 0, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Shared_Error", "rp": "EventPlanningAndManagementSystem_Views_Shared_Error.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 25, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "AspNetCoreGeneratedDocument.Views_Shared_Error403", "rp": "EventPlanningAndManagementSystem_Views_Shared_Error403.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 12, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -247,7 +246,7 @@ var assemblies = [
       { "name": "AspNetCoreGeneratedDocument.Views_UserProfile_Index", "rp": "EventPlanningAndManagementSystem_Views_UserProfile_Index.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 52, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "CategoriesController", "rp": "EventPlanningAndManagementSystem_CategoriesController.html", "cl": 0, "ucl": 37, "cal": 37, "tl": 72, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "CategoryService", "rp": "EventPlanningAndManagementSystem_CategoryService.html", "cl": 32, "ucl": 3, "cal": 35, "tl": 63, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "EditEventViewModel", "rp": "EventPlanningAndManagementSystem_EditEventViewModel.html", "cl": 9, "ucl": 0, "cal": 9, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "EditEventViewModel", "rp": "EventPlanningAndManagementSystem_EditEventViewModel.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "ErrorController", "rp": "EventPlanningAndManagementSystem_ErrorController.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 17, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.Areas.Admin.Controllers.HomeController", "rp": "EventPlanningAndManagementSystem_HomeController.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 15, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.Areas.Identity.Pages.Account.LoginModel", "rp": "EventPlanningAndManagementSystem_LoginModel.html", "cl": 0, "ucl": 44, "cal": 44, "tl": 140, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -275,7 +274,7 @@ var assemblies = [
       { "name": "EventPlanningAndManagementSystem.Extensions.ApplicationBuilderExtentions", "rp": "EventPlanningAndManagementSystem_ApplicationBuilderExtentions.html", "cl": 0, "ucl": 19, "cal": 19, "tl": 34, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.Models.ErrorViewModel", "rp": "EventPlanningAndManagementSystem_ErrorViewModel.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.Program", "rp": "EventPlanningAndManagementSystem_Program.html", "cl": 0, "ucl": 52, "cal": 52, "tl": 94, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "EventPlanningAndManagementSystem.Services.EventService", "rp": "EventPlanningAndManagementSystem_EventService.html", "cl": 130, "ucl": 5, "cal": 135, "tl": 192, "cb": 11, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "EventPlanningAndManagementSystem.Services.EventService", "rp": "EventPlanningAndManagementSystem_EventService.html", "cl": 73, "ucl": 62, "cal": 135, "tl": 192, "cb": 6, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.ViewModels.AdminRequests.PendingRegistrationViewModel", "rp": "EventPlanningAndManagementSystem_PendingRegistrationViewModel.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.ViewModels.Category.AddCategoryViewModel", "rp": "EventPlanningAndManagementSystem_AddCategoryViewModel.html", "cl": 1, "ucl": 1, "cal": 2, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "EventPlanningAndManagementSystem.ViewModels.Event.EventDetailsViewModel", "rp": "EventPlanningAndManagementSystem_EventDetailsViewModel.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -305,22 +304,16 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
+    "assembly": "EventPlanningAndManagementSystem", "class": "AspNetCoreGeneratedDocument.Views_Events_Index", "reportPath": "EventPlanningAndManagementSystem_Views_Events_Index.html", "methodName": "ExecuteAsync()", "methodShortName": "ExecuteAsync()", "fileIndex": 0, "line": 4,
+    "metrics": [
+      { "value": 1806, "exceeded": true },
+      { "value": 42, "exceeded": true },
+    ]},
+  {
     "assembly": "EventPlanningAndManagementSystem", "class": "AspNetCoreGeneratedDocument.Views_UserProfile_Edit", "reportPath": "EventPlanningAndManagementSystem_Views_UserProfile_Edit.html", "methodName": "<ExecuteAsync()", "methodShortName": "<ExecuteAsync()", "fileIndex": 0, "line": 37,
     "metrics": [
       { "value": 1056, "exceeded": true },
       { "value": 32, "exceeded": true },
-    ]},
-  {
-    "assembly": "EventPlanningAndManagementSystem", "class": "AspNetCoreGeneratedDocument.Views_Events_Index", "reportPath": "EventPlanningAndManagementSystem_Views_Events_Index.html", "methodName": "ExecuteAsync()", "methodShortName": "ExecuteAsync()", "fileIndex": 0, "line": 4,
-    "metrics": [
-      { "value": 812, "exceeded": true },
-      { "value": 28, "exceeded": true },
-    ]},
-  {
-    "assembly": "EventPlanningAndManagementSystem", "class": "AspNetCoreGeneratedDocument.Views_Shared__Layout", "reportPath": "EventPlanningAndManagementSystem_Views_Shared__Layout.html", "methodName": "<ExecuteAsync()", "methodShortName": "<ExecuteAsync()", "fileIndex": 0, "line": 46,
-    "metrics": [
-      { "value": 812, "exceeded": true },
-      { "value": 28, "exceeded": true },
     ]},
   {
     "assembly": "EventPlanningAndManagementSystem", "class": "AspNetCoreGeneratedDocument.Views_Events_Details", "reportPath": "EventPlanningAndManagementSystem_Views_Events_Details.html", "methodName": "ExecuteAsync()", "methodShortName": "ExecuteAsync()", "fileIndex": 0, "line": 4,
